@@ -8,6 +8,7 @@ import Dashboard from './scenes/dashboards/Dashboard'
 import Layout from './scenes/layout/Layout'
 import Products from './scenes/products/Products'
 import Customers from './scenes/customers/Customers'
+import Transactions from './scenes/transactions/Transactions'
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/products' element={<Products />} />
             <Route path='/customers' element={<Customers />} />
+            <Route path='/transactions' element={<Transactions />} />
           </Route>
         </Routes>
       </ThemeProvider>

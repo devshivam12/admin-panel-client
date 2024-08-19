@@ -9,9 +9,10 @@ const Customers = () => {
     const [page, setPage] = useState(0)
     const [pageSize, setPageSize] = useState(10)
 
-    const { data, isLoading, error } = useGetCustomersQuery({ page: page + 1, limit: pageSize })
+    const { data, isLoading, error } = useGetCustomersQuery({ page, pageSize })
     const customerData = data?.data || []
     const totalRows = data?.totalCount || 0
+    console.log("Fetching customers with page:", page + 1, "and limit:", pageSize);
 
     console.log("API Parameters:", { page: page + 1, limit: pageSize });
     // Debugging logs
