@@ -9,6 +9,8 @@ import Layout from './scenes/layout/Layout'
 import Products from './scenes/products/Products'
 import Customers from './scenes/customers/Customers'
 import Transactions from './scenes/transactions/Transactions'
+import Geography from './scenes/locations/Geography'
+import OverviewChart from './scenes/overview/OverviewChart'
 
 const App = () => {
 
@@ -29,6 +31,8 @@ const App = () => {
             <Route path='/products' element={<Products />} />
             <Route path='/customers' element={<Customers />} />
             <Route path='/transactions' element={<Transactions />} />
+            <Route path='/geography' element={<Geography />} />
+            <Route path='/overview' element={<OverviewChart />} />
           </Route>
         </Routes>
       </ThemeProvider>
