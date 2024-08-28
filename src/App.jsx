@@ -10,7 +10,9 @@ import Products from './scenes/products/Products'
 import Customers from './scenes/customers/Customers'
 import Transactions from './scenes/transactions/Transactions'
 import Geography from './scenes/locations/Geography'
-import OverviewChart from './scenes/overview/OverviewChart'
+import OverView from './scenes/overview/OverView'
+import Daily from './scenes/daily/Daily'
+import Monthly from './scenes/monthly/Monthly'
 
 const App = () => {
 
@@ -32,7 +34,9 @@ const App = () => {
             <Route path='/customers' element={<Customers />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/geography' element={<Geography />} />
-            <Route path='/overview' element={<OverviewChart />} />
+            <Route path='/overview' element={<OverView />} />
+            <Route path='/daily' element={<Daily />} />
+            <Route path='/monthly' element={<Monthly />} />
           </Route>
         </Routes>
       </ThemeProvider>
