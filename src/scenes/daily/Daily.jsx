@@ -11,7 +11,7 @@ const Daily = () => {
     const [endDate, setEndDate] = useState(new Date("2021-03-01"));
     const { data, isLoading } = useGetSalesQuery();
     const theme = useTheme();
-    // console.log(data)
+
     const [formattedData] = useMemo(() => {
         if (!data) return [[], []];
 
@@ -28,9 +28,9 @@ const Daily = () => {
         };
 
         Object.values(dailyData).forEach(({ date, totalSales, totalUnits }) => {
-            // console.log("date", date)
+
             const dateFormatted = new Date(date);
-            // console.log("Date from dailyData:", dateFormatted);
+
             if (dateFormatted >= startDate && dateFormatted <= endDate && totalSales !== undefined &&
                 totalUnits !== undefined) {
                 const splitDate = date.substring(date.indexOf("-") + 1);
@@ -41,11 +41,11 @@ const Daily = () => {
             }
         });
 
-        // console.log("Daily Data:", dailyData);
+
         const formattedData = [totalSalesLine, totalUnitsLine];
-        // console.log("Formatted Data:", formattedData);
+
         return [formattedData];
-    }, [data, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [data, startDate, endDate]);
 
 
     return (
@@ -74,7 +74,7 @@ const Daily = () => {
                     </Box>
                 </Box>
 
-                {data ? (
+                {data || !isLoading ? (
                     <ResponsiveLine
                         data={formattedData}
                         theme={{

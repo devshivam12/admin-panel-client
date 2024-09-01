@@ -19,7 +19,7 @@ const Geography = () => {
         height="75vh"
         border={`1px solid ${theme.palette.secondary[200]}`}
       >
-        {data?.formattedLocations ? (
+        {data?.formattedLocations || !isLoading ? (
           <ResponsiveChoropleth
             data={data?.formattedLocations}
             theme={{

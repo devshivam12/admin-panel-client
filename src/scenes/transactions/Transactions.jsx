@@ -1,6 +1,6 @@
 
 import { Box, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGetTransactionsQuery } from '../../state/api'
 import Header from '../../components/Header'
 import { DataGrid } from '@mui/x-data-grid'
@@ -13,6 +13,7 @@ const Transactions = () => {
   const [sort, setSort] = useState({})
   const [search, setSearch] = useState("")
 
+  const [loader, setLoader] = useState(true)
   const [searchInput, setSearchInput] = useState("")
   const { data, isLoading } = useGetTransactionsQuery({
     page,
@@ -21,9 +22,11 @@ const Transactions = () => {
     search
   })
 
-  console.log(data)
-
-
+  useEffect(() => {
+    if (!isLoading) {
+      setLoader(false)
+    }
+  }, [isLoading, data])
 
   const columns = [
     {
@@ -75,57 +78,65 @@ const Transactions = () => {
         title="TRANSACTIONS"
         subtitle="Entire list of transactions"
       />
-      <Box
-        height="80vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none"
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none"
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: "none"
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none"
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`
-          }
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          getRowId={(row) => row._id}
-          rows={(data && data.transactionWithProducts) || []}
-          columns={columns}
-          rowCount={(data && data.total) || 0}
-          rowsPerPageOptions={[20, 50, 100]}
-          pagination
-          page={page - 1}
-          pageSize={pageSize}
-          paginationMode='server'
-          sortingMode='server'
-          onPageChange={(newPage) => {
-            console.log('New page:', newPage + 1);
-            setPage(newPage + 1)
+      {data || !isLoading ? (
+        <Box
+          height="80vh"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none"
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none"
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderBottom: "none"
+            },
+            "& .MuiDataGrid-virtualScroller": {
+              backgroundColor: theme.palette.primary.light,
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none"
+            },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${theme.palette.secondary[200]} !important`
+            }
           }}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          components={{Toolbar : DataGridCustomeToolbar}}
-          componentsProps={{
-            toolbar : { searchInput, setSearchInput, setSearch} 
-          }}
-        />
-      </Box>
+        >
+          <DataGrid
+            loading={loader}
+            getRowId={(row) => row._id}
+            rows={(data && data.transactionWithProducts) || []}
+            columns={columns}
+            rowCount={(data && data.total) || 0}
+            rowsPerPageOptions={[20, 50, 100]}
+            pagination
+            page={page - 1}
+            pageSize={pageSize}
+            paginationMode='server'
+            sortingMode='server'
+            onPageChange={(newPage) => {
+              setPage(newPage + 1)
+              setLoader(true)
+            }}
+            onPageSizeChange={(newPageSize) => {
+              setPageSize(newPageSize)
+              setLoader(true)
+            }}
+            onSortModelChange={(newSortModel) => {
+              setSort(...newSortModel)
+              setLoader(true)
+            }}
+            components={{ Toolbar: DataGridCustomeToolbar }}
+            componentsProps={{
+              toolbar: { searchInput, setSearchInput, setSearch }
+            }}
+          />
+        </Box>
+      ) : (<>Loading...</>)}
     </Box>
   )
 }

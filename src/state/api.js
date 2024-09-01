@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_BASE_URL }),
     reducerPath: "adminApi",
-    tagTypes: ["User", "Products", "Customers", "Transactions", "Locations", "Overall Sales"],
+    tagTypes: ["User", "Products", "Customers", "Transactions", "Locations", "Overall Sales", "Admin", "Performance", "Dashboard"],
     endpoints: (build) => ({
         getUser: build.query({
             query: (id) => `general/user/${id}`,
@@ -21,21 +21,33 @@ export const api = createApi({
             }),
             providesTags: ["Customers"]
         }),
-        getTransactions : build.query({
-            query : ({page, pageSize, sort, search}) => ({
-                url : "client/get-transactions",
-                method : "GET",
-                params : { page, pageSize, sort, search}
+        getTransactions: build.query({
+            query: ({ page, pageSize, sort, search }) => ({
+                url: "client/get-transactions",
+                method: "GET",
+                params: { page, pageSize, sort, search }
             }),
-            providesTags : ["Transactions"]
+            providesTags: ["Transactions"]
         }),
-        getLocations : build.query({
-            query : () => 'client/geography',
-            providesTags : ["Locations"]
+        getLocations: build.query({
+            query: () => 'client/geography',
+            providesTags: ["Locations"]
         }),
-        getSales : build.query({
-            query : () => 'sales/get-sales',
-            providesTags : ["Overall Sales"]
+        getSales: build.query({
+            query: () => 'sales/get-sales',
+            providesTags: ["Overall Sales"]
+        }),
+        getAdmin: build.query({
+            query: () => 'management/admins',
+            providesTags: ["Admin"]
+        }),
+        getPerformance: build.query({
+            query: (id) => `management/affiliate/${id}`,
+            providesTags: ["Performance"]
+        }),
+        getDashboardInformation: build.query({
+            query: () => 'general/dashboard',
+            providesTags: ["Dashboard"]
         })
     })
 })
@@ -46,5 +58,8 @@ export const {
     useGetCustomersQuery,
     useGetTransactionsQuery,
     useGetLocationsQuery,
-    useGetSalesQuery
+    useGetSalesQuery,
+    useGetAdminQuery,
+    useGetPerformanceQuery,
+    useGetDashboardInformationQuery ,
 } = api 

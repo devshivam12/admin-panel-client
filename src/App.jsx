@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSettings } from './theme'
 import { createTheme } from '@mui/material/styles'
-import { CssBaseline, ThemeProvider } from '@mui/material'
+import { Breadcrumbs, CssBaseline, ThemeProvider } from '@mui/material'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Dashboard from './scenes/dashboards/Dashboard'
 import Layout from './scenes/layout/Layout'
@@ -13,7 +13,9 @@ import Geography from './scenes/locations/Geography'
 import OverView from './scenes/overview/OverView'
 import Daily from './scenes/daily/Daily'
 import Monthly from './scenes/monthly/Monthly'
-
+import Breakdown from './scenes/breakdown/Breakdown'
+import Admin from './scenes/admin/Admin'
+import Performance from './scenes/performance/Performance'
 const App = () => {
 
   const mode = useSelector((state) => state.global.mode)
@@ -37,6 +39,9 @@ const App = () => {
             <Route path='/overview' element={<OverView />} />
             <Route path='/daily' element={<Daily />} />
             <Route path='/monthly' element={<Monthly />} />
+            <Route path='/breakdown' element={<Breakdown />} />
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/performance' element={<Performance />} />
           </Route>
         </Routes>
       </ThemeProvider>
